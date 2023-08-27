@@ -19,6 +19,9 @@ class CollectionController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @param GetCollectionsWithFilterRequest $request
+     * @return AnonymousResourceCollection
      */
     public function index(GetCollectionsWithFilterRequest $request): AnonymousResourceCollection
     {
@@ -34,6 +37,9 @@ class CollectionController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     *
+     * @param StoreCollectionRequest $request
+     * @return CollectionDetailResource|JsonResponse
      */
     public function store(StoreCollectionRequest $request): CollectionDetailResource|JsonResponse
     {
@@ -50,6 +56,10 @@ class CollectionController extends Controller
 
     /**
      * Store a newly created contributor in storage.
+     *
+     * @param StoreContributorRequest $request
+     * @param int $id
+     * @return ContributorDetailResource|JsonResponse
      */
     public function contributorStore(StoreContributorRequest $request, int $id): ContributorDetailResource|JsonResponse
     {
@@ -70,6 +80,9 @@ class CollectionController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param int $id
+     * @return CollectionDetailResource|JsonResponse
      */
     public function show(int $id): CollectionDetailResource|JsonResponse
     {
@@ -86,6 +99,10 @@ class CollectionController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param UpdateCollectionRequest $request
+     * @param Collection $collection
+     * @return void
      */
     public function update(UpdateCollectionRequest $request, collection $collection): void
     {
@@ -94,6 +111,9 @@ class CollectionController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param int $id
+     * @return void
      */
     public function destroy(int $id): void
     {

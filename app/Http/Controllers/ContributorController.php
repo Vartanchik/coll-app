@@ -12,6 +12,8 @@ class ContributorController extends Controller
 {
     /**
      * Display a listing of the resource.
+     *
+     * @return AnonymousResourceCollection
      */
     public function index(): AnonymousResourceCollection
     {
@@ -20,6 +22,9 @@ class ContributorController extends Controller
 
     /**
      * Display the specified resource.
+     *
+     * @param int $id
+     * @return ContributorDetailResource|JsonResponse
      */
     public function show(int $id): ContributorDetailResource|JsonResponse
     {
@@ -36,6 +41,10 @@ class ContributorController extends Controller
 
     /**
      * Update the specified resource in storage.
+     *
+     * @param UpdateContributorRequest $request
+     * @param Contributor $contributor
+     * @return void
      */
     public function update(UpdateContributorRequest $request, contributor $contributor): void
     {
@@ -44,6 +53,9 @@ class ContributorController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return void
      */
     public function destroy($id): void
     {
