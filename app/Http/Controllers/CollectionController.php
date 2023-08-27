@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetCollectionsWithFilterRequest;
+use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCollectionRequest;
 use App\Http\Requests\UpdateCollectionRequest;
+use App\Services\CollectionService;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CollectionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(GetCollectionsWithFilterRequest $request): AnonymousResourceCollection
     {
-        //
+        $collectionService = new CollectionService();
+
+        $remainingAmount = $request->get('remainingAmount');
+        $isLessThanTargetAmount = $request->get('isLessThanTargetAmount', false);
+
+        $collections = $collectionService->getCollectionsWithFilters($remainingAmount, $isLessThanTargetAmount);
+
+        return CollectionResource::collection($collections);
     }
 
     /**
