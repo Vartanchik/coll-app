@@ -2,66 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ContributorDetailResource;
 use App\Models\Contributor;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreContributorRequest;
 use App\Http\Requests\UpdateContributorRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ContributorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreContributorRequest $request)
-    {
-        //
+        return ContributorDetailResource::collection(Contributor::all());
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Contributor $contributor)
+    public function show(int $id): ContributorDetailResource|JsonResponse
     {
-        //
-    }
+        $contributor = Contributor::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Contributor $contributor)
-    {
-        //
+        if ($contributor === null) {
+            return response()->json([
+                'message' => 'Contributor not found.'
+            ], 404);
+        }
+
+        return new ContributorDetailResource($contributor);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateContributorRequest $request, Contributor $contributor)
+    public function update(UpdateContributorRequest $request, contributor $contributor): void
     {
-        //
+        $contributor->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contributor $contributor)
+    public function destroy($id): void
     {
-        //
+        $contributor = Contributor::find($id);
+
+        if ($contributor === null) {
+            return;
+        }
+
+        $contributor->delete();
     }
 }

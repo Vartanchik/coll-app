@@ -55,7 +55,7 @@ class CollectionController extends Controller
         if ($collection === null) {
             return response()->json([
                 'message' => 'Collection not found.'
-            ], 400);
+            ], 404);
         }
 
         return new CollectionDetailResource($collection->loadMissing('contributors'));
