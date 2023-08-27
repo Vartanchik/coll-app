@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ContributorController;
 use Illuminate\Support\Facades\Route;
@@ -15,5 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::apiResource('/collections', CollectionController::class);
-Route::apiResource('/contributors', ContributorController::class);
+Route::post('/signup', [AuthController::class, 'signup']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth:sanctum')->group( function () {
+    Route::apiResource('/collections', CollectionController::class);
+    Route::apiResource('/contributors', ContributorController::class);
+    Route::delete('/collections/{id}', [CollectionController::class, 'destroy']);
+    Route::delete('/contributors/{id}', [ContributorController::class, 'destroy']);
+});
