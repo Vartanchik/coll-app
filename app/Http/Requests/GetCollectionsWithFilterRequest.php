@@ -15,6 +15,8 @@ class GetCollectionsWithFilterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'array_key_first(remainingAmount)' => 'in:eq,lt,lte,gt,gte,ne',
+            'remainingAmount.*' => 'numeric',
             'isLessThanTargetAmount' => 'boolean'
         ];
     }

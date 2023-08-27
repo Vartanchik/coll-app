@@ -14,22 +14,11 @@ class UpdateCollectionRequest extends FormRequest
      */
     public function rules(): array
     {
-        $method = $this->method();
-
-        // Check if PUT, else PATCH
-        if ($method === 'PUT') {
-            return [
-                'title' => 'required',
-                'description' => 'required',
-                'targetAmount' => 'required|numeric',
-                'link' => 'required|url'
-            ];
-        }
         return [
-            'title' => 'sometimes|required',
-            'description' => 'sometimes|required',
-            'targetAmount' => 'sometimes|required|numeric',
-            'link' => 'sometimes|required|url'
+            'title' => 'required',
+            'description' => 'required',
+            'targetAmount' => 'required|numeric',
+            'link' => 'required|url'
         ];
     }
 

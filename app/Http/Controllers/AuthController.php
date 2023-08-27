@@ -12,10 +12,34 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
-     * Store a newly created user in storage.
-     *
-     * @param SignupRequest $request
-     * @return JsonResponse
+     * @OA\Post(
+     *     path="/api/signup",
+     *     tags={"Auth"},
+     *     summary="Creates new user",
+     *     operationId="signup",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="name", type="string", example="Victoria"),
+     *             @OA\Property(property="email", type="string", example="victoria.v@gmail.com"),
+     *             @OA\Property(property="password", type="string", example="Vica777_")
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="user created",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="User created successfully.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Operation failed.")
+     *         )
+     *     )
+     * )
      */
     public function signup(SignupRequest $request): JsonResponse
     {
@@ -37,10 +61,41 @@ class AuthController extends Controller
     }
 
     /**
-     * Get authentication token.
-     *
-     * @param LoginRequest $request
-     * @return JsonResponse
+     * @OA\Post(
+     *     path="/api/login",
+     *     tags={"Auth"},
+     *     summary="Creates authentication token",
+     *     operationId="login",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             @OA\Property(property="email", type="string", example="victoria.v@gmail.com"),
+     *             @OA\Property(property="password", type="string", example="Vica777_")
+     *         )
+     *      ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="user loggedin",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="User logged in successfully."),
+     *             @OA\Property(property="token", type="string", example="1|laravel_sanctum_j2VoZ1wDmAwK7Oif8KFs8a8XbX2tVIRBT2hprRPK358b512b")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Operation failed.")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Invalid operation",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="Logging is failed.")
+     *         )
+     *     ),
+     * )
      */
     public function login(LoginRequest $request): JsonResponse
     {

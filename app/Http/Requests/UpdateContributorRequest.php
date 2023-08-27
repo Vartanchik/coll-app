@@ -14,18 +14,9 @@ class UpdateContributorRequest extends FormRequest
      */
     public function rules(): array
     {
-        $method = $this->method();
-
-        // Check if PUT, else PATCH
-        if ($method === 'PUT') {
-            return [
-                'userName' => 'required',
-                'amount' => 'required|numeric'
-            ];
-        }
         return [
-            'userName' => 'sometimes|required',
-            'amount' => 'sometimes|required|numeric'
+            'userName' => 'required',
+            'amount' => 'required|numeric'
         ];
     }
 
