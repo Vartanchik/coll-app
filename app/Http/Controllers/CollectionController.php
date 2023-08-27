@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetCollectionsWithFilterRequest;
+use App\Http\Resources\CollectionDetailResource;
 use App\Http\Resources\CollectionResource;
 use App\Models\Collection;
 use App\Http\Requests\StoreCollectionRequest;
 use App\Http\Requests\UpdateCollectionRequest;
 use App\Services\CollectionService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CollectionController extends Controller
@@ -28,50 +30,56 @@ class CollectionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCollectionRequest $request)
+    public function store(StoreCollectionRequest $request): CollectionDetailResource|JsonResponse
     {
-        //
+        $createdCollection = Collection::create($request->all());
+
+        if ($createdCollection === null) {
+            return response()->json([
+                'message' => 'Collection creation is failed.'
+            ], 400);
+        }
+
+        return new CollectionDetailResource($createdCollection);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Collection $collection)
+    public function show(int $id): CollectionDetailResource|JsonResponse
     {
-        //
-    }
+        $collection = Collection::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Collection $collection)
-    {
-        //
+        if ($collection === null) {
+            return response()->json([
+                'message' => 'Collection not found.'
+            ], 400);
+        }
+
+        return new CollectionDetailResource($collection->loadMissing('contributors'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCollectionRequest $request, Collection $collection)
+    public function update(UpdateCollectionRequest $request, collection $collection): void
     {
-        //
+        $collection->update($request->all());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Collection $collection)
+    public function destroy(int $id): void
     {
-        //
+        $collection = Collection::find($id);
+
+        if ($collection === null) {
+            return;
+        }
+
+        $collection->delete();
     }
 }
