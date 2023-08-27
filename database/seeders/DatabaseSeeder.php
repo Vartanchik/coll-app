@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Collection::factory(10)->create()->each(
+        Collection::factory(1)->create()->each(
             function ($collection) {
                 $contributors = Contributor::factory(5)->make();
                 $collection->contributors()->saveMany($contributors);
