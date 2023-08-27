@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->group( function () {
     Route::apiResource('/contributors', ContributorController::class);
     Route::delete('/collections/{id}', [CollectionController::class, 'destroy']);
     Route::delete('/contributors/{id}', [ContributorController::class, 'destroy']);
+    Route::post('/collections/{id}/contributors', [CollectionController::class, 'contributorStore']);
 });
